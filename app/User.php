@@ -2,7 +2,6 @@
 
 namespace App;
 
-use App\Notifications\ChangeEmail;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -37,15 +36,4 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-
-    /**
-     * メールアドレス確定メールを送信
-     *
-     * @param [type] $token
-     * 
-     */
-    public function sendEmailResetNotification($token)
-    {
-        $this->notify(new ChangeEmail($token));
-    }
 }

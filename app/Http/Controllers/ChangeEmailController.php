@@ -35,15 +35,14 @@ class ChangeEmailController extends Controller
             $param['user_id'] = Auth::id();
             $param['new_email'] = $new_email;
             $param['token'] = $token;
-            EmailReset::create($param);
+            $email_reset = EmailReset::create($param);
 
             DB::commit();
 
-            Auth::user()->sendEmailResetNotification($token);
+            $email_reset->sendEmailResetNotification($token);
 
             return redirect('/home')->with('flash_message', '確認メールを送信しました。');
         } catch (\Exception $e) {
-            return $e;
             DB::rollback();
             return redirect('/home')->with('flash_message', 'メール更新に失敗しました。');
         }
